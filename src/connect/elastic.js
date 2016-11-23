@@ -16,7 +16,7 @@ import {
  * @param {string|object} [es]=CONFIG_SECTION_ES
  * @returns {*}
  */
-export default ({ es = CONFIG_SECTION_ES }) => {
+export default ({ es = CONFIG_SECTION_ES } = {}) => {
   if (!isString(es) || !isPlainObject(es)) {
     throw new TypeError([
       'Настройки для соединения с ElasticSearch могут быть только:',

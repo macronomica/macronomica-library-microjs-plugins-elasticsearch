@@ -2,7 +2,7 @@ import middleware from 'elasticsearch';
 import connect from './connect';
 import actions from './actions';
 
-export default ({ es } = {}) => (micro, name, pluginId) => {
+export default (settings) => (micro, name, pluginId) => {
   const plugin = { name, id: pluginId };
   let __client;
   let __actions = {};
@@ -12,7 +12,7 @@ export default ({ es } = {}) => (micro, name, pluginId) => {
       case: 'wait',
       args: [],
       done: () => new Promise(resolve => {
-        __client = connect({ es });
+        __client = connect(settings);
         __actions = actions(micro, plugin, __client);
         resolve();
       })

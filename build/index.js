@@ -18,10 +18,7 @@ var _actions2 = _interopRequireDefault(_actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      es = _ref.es;
-
+exports.default = function (settings) {
   return function (micro, name, pluginId) {
     var plugin = { name: name, id: pluginId };
     var __client = void 0;
@@ -32,7 +29,7 @@ exports.default = function () {
       args: [],
       done: function done() {
         return new Promise(function (resolve) {
-          __client = (0, _connect2.default)({ es: es });
+          __client = (0, _connect2.default)(settings);
           __actions = (0, _actions2.default)(micro, plugin, __client);
           resolve();
         });

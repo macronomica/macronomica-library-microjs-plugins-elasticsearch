@@ -36,8 +36,9 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
  * @param {string|object} [es]=CONFIG_SECTION_ES
  * @returns {*}
  */
-exports.default = function (_ref) {
-  var _ref$es = _ref.es,
+exports.default = function () {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$es = _ref.es,
       es = _ref$es === undefined ? _constants.CONFIG_SECTION_ES : _ref$es;
 
   if (!(0, _lodash2.default)(es) || !(0, _lodash4.default)(es)) {
