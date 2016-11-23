@@ -11,10 +11,11 @@ export default ({ es } = {}) => (micro, name, pluginId) => {
     .queue({
       case: 'wait',
       args: [],
-      done: () => {
+      done: () => new Promise(resolve => {
         __client = connect({ es });
         __actions = actions(micro, plugin, __client);
-      }
+        resolve();
+      })
     })
     .queue({
       case: 'close',

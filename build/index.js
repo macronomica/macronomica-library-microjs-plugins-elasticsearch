@@ -31,8 +31,11 @@ exports.default = function () {
       case: 'wait',
       args: [],
       done: function done() {
-        __client = (0, _connect2.default)({ es: es });
-        __actions = (0, _actions2.default)(micro, plugin, __client);
+        return new Promise(function (resolve) {
+          __client = (0, _connect2.default)({ es: es });
+          __actions = (0, _actions2.default)(micro, plugin, __client);
+          resolve();
+        });
       }
     }).queue({
       case: 'close',
