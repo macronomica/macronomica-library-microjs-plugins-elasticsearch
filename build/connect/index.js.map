@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/connect/index.js"],"names":["micro"],"mappings":";;;;;;AAAA;;;;;;kBAEe,UAACA,KAAD;AAAA;AAAA,C","file":"index.js","sourcesContent":["import elastic from './elastic';\n\nexport default (micro) => elastic;"]}
