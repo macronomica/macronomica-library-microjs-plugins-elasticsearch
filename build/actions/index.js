@@ -21,12 +21,12 @@ exports.default = function (micro, plugin, client) {
   });
 
   return new Proxy(client, {
-    get: function get(property) {
+    get: function get(target, property) {
       if (property in decorators) {
         return decorators[property];
       }
 
-      return client[property];
+      return target[property];
     }
   });
 };

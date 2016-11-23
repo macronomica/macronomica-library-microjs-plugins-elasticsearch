@@ -10,7 +10,5 @@ var _elastic2 = _interopRequireDefault(_elastic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (micro) {
-  return _elastic2.default;
-};
+exports.default = _elastic2.default;
 //# sourceMappingURL=index.js.map

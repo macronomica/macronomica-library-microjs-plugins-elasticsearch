@@ -11,11 +11,11 @@ export default (micro, plugin, client) => {
     .forEach(key => decorators[ key ] = decorators[ key ](micro, plugin, client));
 
   return new Proxy(client, {
-    get(property) {
+    get(target, property) {
       if (property in decorators) {
         return decorators[ property ];
       }
 
-      return client[ property ];
+      return target[ property ];
   }});
 }

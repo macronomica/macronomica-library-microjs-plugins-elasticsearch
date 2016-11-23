@@ -1,3 +1,3 @@
 import elastic from './elastic';
 
-export default (micro) => elastic;
+export default elastic;
