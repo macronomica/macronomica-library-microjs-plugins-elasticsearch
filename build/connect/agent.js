@@ -32,7 +32,7 @@ exports.default = function (_ref) {
   var _ref$agent = _ref.agent,
       agent = _ref$agent === undefined ? _constants.CONFIG_SECTION_AGENT : _ref$agent;
 
-  if (!(0, _lodash2.default)(agent) || !(0, _lodash4.default)(agent)) {
+  if (!(0, _lodash2.default)(agent) && !(0, _lodash4.default)(agent)) {
     throw new TypeError(['Настройки для Agent ElasticSearch могут быть только:', '- {string} -> название имени ключа из конфигурации', '- {object} -> объектом с настройками @see https://www.npmjs.com/package/agentkeepalive'].join('\n'));
   }
 

@@ -12,7 +12,7 @@ import {
  * @returns {*}
  */
 export default ({ agent = CONFIG_SECTION_AGENT }) => {
-  if (!isString(agent) || !isPlainObject(agent)) {
+  if (!isString(agent) && !isPlainObject(agent)) {
     throw new TypeError([
       'Настройки для Agent ElasticSearch могут быть только:',
       '- {string} -> название имени ключа из конфигурации',

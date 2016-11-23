@@ -41,7 +41,7 @@ exports.default = function () {
       _ref$es = _ref.es,
       es = _ref$es === undefined ? _constants.CONFIG_SECTION_ES : _ref$es;
 
-  if (!(0, _lodash2.default)(es) || !(0, _lodash4.default)(es)) {
+  if (!(0, _lodash2.default)(es) && !(0, _lodash4.default)(es)) {
     throw new TypeError(['Настройки для соединения с ElasticSearch могут быть только:', '- {string} -> название имени ключа из конфигурации', '- {object} -> объектом с настройками @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options'].join('\n'));
   }
 
