@@ -1,6 +1,6 @@
 {
   "name": "@microjs/microjs-plugins-elasticsearch",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "Плагин Microjs для запросов к ElasticSearch",
   "main": "index.js",
