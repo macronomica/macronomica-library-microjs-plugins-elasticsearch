@@ -13,10 +13,12 @@ import {
 } from '../constants';
 
 /**
+ * @param {object} micro
+ * @param {object} plugin
  * @param {string|object} [es]=CONFIG_SECTION_ES
  * @returns {*}
  */
-export default ({ es = CONFIG_SECTION_ES } = {}) => {
+export default (micro, plugin, { es = CONFIG_SECTION_ES } = {}) => {
   if (!isString(es) && !isPlainObject(es)) {
     throw new TypeError([
       'Настройки для соединения с ElasticSearch могут быть только:',
@@ -34,9 +36,42 @@ export default ({ es = CONFIG_SECTION_ES } = {}) => {
     ...other
   } = isPlainObject(es) ? es : config.has(es) ? config.get(es) : {};
 
-  return new elasticsearch.Client({
+  const client = new elasticsearch.Client({
     host, log, requestTimeout, maxSockets,
     createNodeAgent: () => Agent(agent),
     ...other
   });
+
+  return client
+    .ping()
+    .then(() => {
+      micro.logger.info(`Создано подключение к ElasticSearch:`, {
+        id  : plugin.id,
+        payload: {
+          host,
+          log,
+          maxSockets,
+          requestTimeout,
+          agent,
+          ...other
+        }
+      });
+
+      return client;
+    })
+    .catch(error => {
+      micro.logger.error(`Ошибка подключения к ElasticSearch:`, {
+        id  : plugin.id,
+        payload: {
+          host,
+          log,
+          maxSockets,
+          requestTimeout,
+          agent,
+          ...other
+        }
+      });
+
+      return Promise.reject(error);
+    });
 }

@@ -33,11 +33,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 /**
+ * @param {object} micro
+ * @param {object} plugin
  * @param {string|object} [es]=CONFIG_SECTION_ES
  * @returns {*}
  */
-exports.default = function () {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+exports.default = function (micro, plugin) {
+  var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
       _ref$es = _ref.es,
       es = _ref$es === undefined ? _constants.CONFIG_SECTION_ES : _ref$es;
 
@@ -58,11 +60,39 @@ exports.default = function () {
       agent = _ref2$agent === undefined ? _constants.CONFIG_SECTION_AGENT : _ref2$agent,
       other = _objectWithoutProperties(_ref2, ['host', 'log', 'maxSockets', 'requestTimeout', 'agent']);
 
-  return new _elasticsearch2.default.Client(_extends({
+  var client = new _elasticsearch2.default.Client(_extends({
     host: host, log: log, requestTimeout: requestTimeout, maxSockets: maxSockets,
     createNodeAgent: function createNodeAgent() {
       return (0, _agent2.default)(agent);
     }
   }, other));
+
+  return client.ping().then(function () {
+    micro.logger.info('\u0421\u043E\u0437\u0434\u0430\u043D\u043E \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043A ElasticSearch:', {
+      id: plugin.id,
+      payload: _extends({
+        host: host,
+        log: log,
+        maxSockets: maxSockets,
+        requestTimeout: requestTimeout,
+        agent: agent
+      }, other)
+    });
+
+    return client;
+  }).catch(function (error) {
+    micro.logger.error('\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F \u043A ElasticSearch:', {
+      id: plugin.id,
+      payload: _extends({
+        host: host,
+        log: log,
+        maxSockets: maxSockets,
+        requestTimeout: requestTimeout,
+        agent: agent
+      }, other)
+    });
+
+    return Promise.reject(error);
+  });
 };
 //# sourceMappingURL=elastic.js.map

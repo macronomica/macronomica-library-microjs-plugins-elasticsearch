@@ -28,10 +28,9 @@ exports.default = function (settings) {
       case: 'wait',
       args: [],
       done: function done() {
-        return new Promise(function (resolve) {
-          __client = (0, _connect2.default)(settings);
-          __actions = (0, _actions2.default)(micro, plugin, __client);
-          resolve();
+        return (0, _connect2.default)(micro, plugin, settings).then(function (client) {
+          __actions = (0, _actions2.default)(micro, plugin, __client = client);
+          return client;
         });
       }
     }).queue({
@@ -43,6 +42,10 @@ exports.default = function (settings) {
             __actions = null;
             __client = null;
           }
+
+          micro.logger.info('\u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043A ElasticSearch \u0440\u0430\u0437\u043E\u0440\u0432\u0430\u043D\u043E', {
+            id: plugin.id
+          });
 
           resolve();
         });

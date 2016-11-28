@@ -11,11 +11,11 @@ export default (settings) => (micro, name, pluginId) => {
     .queue({
       case: 'wait',
       args: [],
-      done: () => new Promise(resolve => {
-        __client = connect(settings);
-        __actions = actions(micro, plugin, __client);
-        resolve();
-      })
+      done: () => connect(micro, plugin, settings)
+        .then(client => {
+          __actions = actions(micro, plugin, __client = client);
+          return client;
+        })
     })
     .queue({
       case: 'close',
@@ -25,6 +25,10 @@ export default (settings) => (micro, name, pluginId) => {
           __actions = null;
           __client = null;
         }
+
+        micro.logger.info(`Подключение к ElasticSearch разорвано`, {
+          id: plugin.id
+        });
 
         resolve();
       })
